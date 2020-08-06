@@ -1,0 +1,27 @@
+{
+  "name": "Tech-Blog",
+  "version": "1.0.0",
+  "description": "Github Website:\r https://1hoppy1.github.io/Tech-Blog/",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1hoppy1/Tech-Blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1hoppy1/Tech-Blog/issues"
+  },
+  "homepage": "https://github.com/1hoppy1/Tech-Blog#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.4"
+  }
+}
