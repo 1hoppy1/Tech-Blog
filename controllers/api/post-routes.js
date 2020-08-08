@@ -10,9 +10,9 @@ const sequelize = require('../../config/connection');
 // get all users
 router.get('/', (req, res) => {
   Post.findAll({
-      attributes: ['id', 'post_url', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']]
+      attributes: ['id', 'post_url', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']], order: [['created_at', 'DESC']],
       //13.3.6
-       ,
+       
        include: [
          {
            model: User,
@@ -67,12 +67,13 @@ router.get('/:id', (req, res) => {
 
 // POST /api/posts
 router.post('/', (req, res) => {
-  // expects {title: 'Forrest Gump', post_url: "https://www.imdb.com/title/tt0109830/?ref_=nv_sr_srsg_0"}
+  // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
   Post.create({
-      title: req.body.title,
-      post_url: req.body.post_url
-    })
-    .then(dbUserData => res.json(dbUserData))
+    title: req.body.title,
+    post_url: req.body.post_url,
+    user_id: req.body.user_id
+  })
+    .then(dbPostData => res.json(dbPostData))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
