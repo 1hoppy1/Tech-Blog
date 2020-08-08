@@ -1,16 +1,4 @@
 const router = require('express').Router();
-const { Post, User } = require('../../models');
-
-// get all users
-router.get('/', (req, res) => {
-    console.log('======================');
-    Post.findAll({
-      // Query configuration
-    })
-  
-  });
-
-  const router = require('express').Router();
 const {
   Post,
   User,
@@ -138,7 +126,7 @@ router.put('/:id', (req, res) => {
     .then(dbUserData => {
       if (!dbUserData[0]) {
         res.status(404).json({
-          message: 'No movie found with this id'
+          message: 'No user found with this id'
         });
         return;
       }
@@ -159,7 +147,7 @@ router.delete('/:id', (req, res) => {
     .then(dbUserData => {
       if (!dbUserData) {
         res.status(404).json({
-          message: 'No movie found with this id'
+          message: 'No user found with this id'
         });
         return;
       }
