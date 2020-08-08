@@ -4,21 +4,23 @@ const {
   User,
   Vote
 } = require('../../models');
+
 const sequelize = require('../../config/connection');
 
 
 // get all users
 router.get('/', (req, res) => {
   Post.findAll({
-      attributes: ['id', 'post_url', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']], order: [['created_at', 'DESC']],
+      attributes: ['id', 'post_url', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']],
+      order: [
+        ['created_at', 'DESC']
+      ],
       //13.3.6
-       
-       include: [
-         {
-           model: User,
-           attributes: ['username']
-         }
-       ]
+
+      include: [{
+        model: User,
+        attributes: ['username']
+      }]
       //13.3.6
     })
     .then(dbPostData => res.json(dbPostData))
@@ -34,20 +36,18 @@ router.get('/:id', (req, res) => {
         id: req.params.id
       },
       attributes: [
-        'id',
-        'post_url',
-        'title',
-        'created_at',
-        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-      ]
-      //13.3.6
-       ,
-       include: [
-         {
-           model: User,
-           attributes: ['username']
-         }
-       ]
+          'id',
+          'post_url',
+          'title',
+          'created_at',
+          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        ]
+        //13.3.6
+        ,
+      include: [{
+        model: User,
+        attributes: ['username']
+      }]
       //13.3.6
     })
     .then(dbPostData => {
@@ -69,10 +69,10 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
   Post.create({
-    title: req.body.title,
-    post_url: req.body.post_url,
-    user_id: req.body.user_id
-  })
+      title: req.body.title,
+      post_url: req.body.post_url,
+      user_id: req.body.user_id
+    })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
       console.log(err);
@@ -83,42 +83,14 @@ router.post('/', (req, res) => {
 
 // PUT /api/posts/upvote
 router.put('/upvote', (req, res) => {
-  // create the vote
-  Vote.create({
-      user_id: req.body.user_id,
-      post_id: req.body.post_id
-    })
-    // new problem below
-    .then(() => {
-      // then find the post we just voted on
-      return Post.findOne({
-          where: {
-            id: req.body.post_id
-          },
-          attributes: [
-            'id',
-            'post_url',
-            'title',
-            'created_at',
-            // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
-            [
-              sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
-              'vote_count'
-            ]
-          ]
-        })
-
-        .then(dbPostData => res.json(dbPostData))
-        .catch(err => {
-          console.log(err);
-          res.status(400).json(err);
-        });
-
-      //end brackets below  
-    })
+  // custom static method created in models/Post.js
+  Post.upvote(req.body, { Vote })
+    .then(updatedPostData => res.json(updatedPostData))
+    .catch(err => {
+      console.log(err);
+      res.status(400).json(err);
+    });
 });
-
-
 
 router.put('/:id', (req, res) => {
 
