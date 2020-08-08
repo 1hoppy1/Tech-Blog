@@ -11,13 +11,15 @@ const sequelize = require('../../config/connection');
 router.get('/', (req, res) => {
   Post.findAll({
       attributes: ['id', 'post_url', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']]
-      // ,
-      // include: [
-      //   {
-      //     model: User,
-      //     attributes: ['username']
-      //   }
-      // ]
+      //13.3.6
+       ,
+       include: [
+         {
+           model: User,
+           attributes: ['username']
+         }
+       ]
+      //13.3.6
     })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
@@ -38,13 +40,15 @@ router.get('/:id', (req, res) => {
         'created_at',
         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ]
-      // ,
-      // include: [
-      //   {
-      //     model: User,
-      //     attributes: ['username']
-      //   }
-      // ]
+      //13.3.6
+       ,
+       include: [
+         {
+           model: User,
+           attributes: ['username']
+         }
+       ]
+      //13.3.6
     })
     .then(dbPostData => {
       if (!dbPostData) {

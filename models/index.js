@@ -2,12 +2,12 @@ const Post = require("./Post");
 const User = require("./User");
 const Vote = require("./Vote");
 
-//User can post many movie suggestions
+//User can post many posts 13.3.5
 User.hasMany(Post, {
   foreignKey: 'user_id'
 });
 
-//Each movie suggestion post belongs to one user
+//Each post belongs to one user 13.3.5
 Post.belongsTo(User, {
   foreignKey: 'user_id',
 });

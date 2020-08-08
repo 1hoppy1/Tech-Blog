@@ -26,14 +26,16 @@ Post.init({
             isURL: true
         }
     }
-    // ,
-    // user_id: {
-    //     type: DataTypes.INTEGER,
-    //     references: {
-    //         model: 'user',
-    //         key: 'id'
-    //     }
-    // }
+    //works on 13.3.4
+     ,
+     user_id: {
+         type: DataTypes.INTEGER,
+         references: {
+             model: 'user',
+             key: 'id'
+         }
+     }
+     //works on 13.3.4
 }, {
     sequelize,
     freezeTableName: true,
