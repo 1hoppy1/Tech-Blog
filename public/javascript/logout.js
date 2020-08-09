@@ -5,11 +5,10 @@ async function logout() {
     });
   
     if (response.ok) {
-        document.location.replace('/');
-        req.session.destroy(() => {
-            res.status(204).end();
-          });
+        document.location.replace('/login');
+        
     } else {
+        
       alert(response.statusText);
     }
   }
