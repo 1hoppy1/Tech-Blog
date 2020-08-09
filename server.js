@@ -2,6 +2,9 @@ const express = require('express');
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
 const path = require('path');
+
+// uncomment when you run locally!!!
+// make sure to comment the code when deploy to heroku
 require("dotenv").config()
 
 //add in session cookies

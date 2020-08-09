@@ -14,9 +14,13 @@
       <h1>
         <a href="/">Jim's Tech Blog</a>
       </h1>
+      {{!-- <nav>
+        <a href="/login">login</a>
+      </nav> --}}
       <nav>
-      <a href="/login">login</a>
-    </nav>
+        <button id="logout" class="btn-no-style">logout</button>
+        <a href="/login">login</a>
+      </nav>
     </header>
     <main>
       {{{ body }}}
@@ -26,6 +30,7 @@
     </footer>
   </div>
 
+<script src="/javascript/logout.js"></script>
 </body>
 
 </html>
