@@ -1,3 +1,5 @@
+const { options } = require("../../models/Post");
+
 async function logout() {
     const response = await fetch('/api/users/logout', {
       method: 'post',
@@ -5,7 +7,7 @@ async function logout() {
     });
   
     if (response.ok) {
-        response.cookie("express.sid", "", opts);
+        response.cookie("express.sid", "", options);
         document.location.replace('/login');
         
     } else {
