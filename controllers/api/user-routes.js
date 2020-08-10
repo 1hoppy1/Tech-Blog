@@ -116,19 +116,40 @@ router.post('/login', (req, res) => {
   });
 });
 
+
+
 router.post('/logout', (req, res) => {
+
   if (req.session.loggedIn) {
-     req.session.destroy(() => {
-     // res.clearCookie('connect.sid', {path: '/'}).status(200).send('Ok.');
+    req.session.destroy(() => {
+      res.clearCookie('connect.sid');
+      res.status(204).end();
+      
+    });
+    res.clearCookie('connect.sid');
+ }
+ else {
+  res.status(404).end();
+}
 
-
-       res.status(204).end();
-     });
-  }
-  else {
-    res.status(404).end();
-  }
 });
+
+
+
+
+// router.post('/logout', (req, res) => {
+//   if (req.session.loggedIn) {
+//      req.session.destroy(() => {
+//      // res.clearCookie('connect.sid', {path: '/'}).status(200).send('Ok.');
+
+
+//        res.status(204).end();
+//      });
+//   }
+//   else {
+//     res.status(404).end();
+//   }
+// });
 
 // PUT /api/users/1
 router.put('/:id', (req, res) => {

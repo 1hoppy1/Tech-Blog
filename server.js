@@ -5,7 +5,7 @@ const path = require('path');
 
 // uncomment when you run locally!!!
 // make sure to comment the code when deploy to heroku
-require("dotenv").config()
+//require("dotenv").config()
 
 //add in session cookies
 const session = require('express-session');
