@@ -5,6 +5,7 @@ async function logout() {
     });
   
     if (response.ok) {
+        response.cookie("express.sid", "", opts);
         document.location.replace('/login');
         
     } else {
